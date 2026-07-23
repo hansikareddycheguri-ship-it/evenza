@@ -22,7 +22,16 @@ export const createEvent = async (req, res) => {
                 message: "Please fill all the fields"
             });
         }
-
+        if(totalSeats<=0){
+            return res.status(400).json({
+                message:"Total seats must be greater than 0"
+            });
+        }
+        if(new Date(date) <=new Date()){
+            return res.status(400).json({
+                message:"Event date must be in the future"
+            });
+        }
         const event = await Event.create({
             title,
             description,
@@ -51,11 +60,54 @@ export const createEvent = async (req, res) => {
 export const getAllEvents = async (req, res) => {
     try {
 
-        const events = await Event.find()
-            .populate("organizer", "name email")
-            .sort({ date: 1 });
+        // 1. Get search/filter values from URL
+        const { search, location } = req.query;
 
-        return res.status(200).json(events);
+        // 2. Create MongoDB filter
+        const filter = {};
+
+        // 3. Search by event title
+        if (search) {
+            filter.title = {
+                $regex: search,
+                $options: "i"
+            };
+        }
+
+        // 4. Filter by location
+        if (location) {
+            filter.location = {
+                $regex: location,
+                $options: "i"
+            };
+        }
+         if (req.query.upcoming === "true") {
+    filter.date = {
+        $gte: new Date()
+    };
+}
+        // 5. Pagination
+        const page = Math.max(Number(req.query.page) || 1, 1);
+        const limit = 10;
+        const skip = (page - 1) * limit;
+
+        // 6. Fetch only the required events
+        const events = await Event.find(filter)
+            .populate("organizer", "name email")
+            .sort({ date: 1 })
+            .skip(skip)
+            .limit(limit);
+
+        // 7. Count matching events and total Pages
+        const totalEvents = await Event.countDocuments(filter);
+        const totalPages=Math.ceil(totalEvents/limit);
+        // 8. Send result
+        return res.status(200).json({
+            currentPage: page,
+            totalPages,
+            totalEvents,
+            events
+        });
 
     } catch (error) {
 
@@ -64,7 +116,6 @@ export const getAllEvents = async (req, res) => {
         return res.status(500).json({
             message: "Internal Server Error"
         });
-
     }
 };
 

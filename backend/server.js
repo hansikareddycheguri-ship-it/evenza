@@ -4,6 +4,8 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
+import bookingRoutes from "./routes/bookingRoutes.js";
+import { errorHandler } from "./middleware/errorMiddleware.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,10 +14,12 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth",authRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/bookings", bookingRoutes);
 // Test Route
 app.get("/", (req, res) => {
     res.send("Evenza Backend RunAning");
 });
+app.use(errorHandler);
 const startServer = async () => {
     await connectDB();
 
