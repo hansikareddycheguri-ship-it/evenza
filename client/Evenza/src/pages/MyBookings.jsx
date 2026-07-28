@@ -30,6 +30,9 @@ function MyBookings() {
 
     const handleCancel = async (bookingId) => {
         try {
+            if (!window.confirm("Are you sure you want to cancel this booking?")) {
+    return;
+}
             const response = await api.delete(
                 `/bookings/${bookingId}`
             );
@@ -48,55 +51,70 @@ function MyBookings() {
     };
 
     if (loading) {
-        return <p>Loading bookings...</p>;
+       return (
+    <div className="text-center mt-5">
+        <div className="spinner-border text-primary"></div>
+    </div>
+);
     }
 
-    return (
-        <div>
-            <Link to="/">← Back to Events</Link>
+   return (
+    <div className="container py-5">
+          <Link
+    to="/"
+    className="btn btn-outline-secondary mb-4"
+>
+    ← Back to Events
+</Link>
 
-            <h1>My Bookings</h1>
+           <h1 className="text-center fw-bold mb-5">
+    🎟️ My Bookings
+</h1>
 
             {message && <p>{message}</p>}
 
             {bookings.length === 0 ? (
-                <p>You have no bookings.</p>
+               <div className="alert alert-info text-center">
+    You haven't booked any events yet.
+</div>
             ) : (
                 bookings.map((booking) => (
-                    <div key={booking._id}>
+                    <div key={booking._id} className="card shadow-sm border-0 mb-4">
+    <div className="card-body">
 
-                        <h2>
-                            {booking.event?.title || "Event unavailable"}
-                        </h2>
+        <h4 className="fw-bold">
+            🎉 {booking.event.title}
+        </h4>
 
-                        <p>
-                            Date:{" "}
-                            {booking.event?.date
-                                ? new Date(
-                                    booking.event.date
-                                ).toLocaleDateString()
-                                : "N/A"}
-                        </p>
+        <p className="text-muted">
+            {booking.event.description}
+        </p>
 
-                        <p>
-                            Location:{" "}
-                            {booking.event?.location || "N/A"}
-                        </p>
+        <p>
+            📅 {new Date(booking.event.date).toLocaleDateString()}
+        </p>
 
-                        <p>Status: {booking.status}</p>
+        <p>
+            📍 {booking.event.location}
+        </p>
 
-                        {booking.status === "Booked" && (
-                            <button
-                                onClick={() =>
-                                    handleCancel(booking._id)
-                                }
-                            >
-                                Cancel Booking
-                            </button>
-                        )}
-
-                        <hr />
-                    </div>
+    {booking.status === "Booked" ? (
+    <button
+        onClick={() => handleCancel(booking._id)}
+        className="btn btn-danger"
+    >
+        Cancel Booking
+    </button>
+) : (
+    <button
+        className="btn btn-secondary"
+        disabled
+    >
+        Cancelled
+    </button>
+)}
+    </div>
+</div>
                 ))
             )}
         </div>

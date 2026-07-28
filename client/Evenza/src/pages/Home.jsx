@@ -12,15 +12,12 @@ function Home() {
             try {
                 const response = await api.get("/events");
 
-                console.log("EVENT RESPONSE:", response.data);
-
                 if (Array.isArray(response.data)) {
                     setEvents(response.data);
                 } else {
                     setEvents(response.data.events || []);
                 }
             } catch (error) {
-                console.error("EVENT FETCH ERROR:", error);
                 setError("Failed to load events");
             } finally {
                 setLoading(false);
@@ -31,44 +28,85 @@ function Home() {
     }, []);
 
     if (loading) {
-        return <p>Loading events...</p>;
+        return (
+            <div className="text-center mt-5">
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+                <p className="mt-3">Loading events...</p>
+            </div>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <div className="alert alert-danger mt-4">
+                {error}
+            </div>
+        );
     }
 
     return (
-        <div>
-            <h1>Evenza</h1>
-            <h2>Upcoming Events</h2>
+        <div className="container py-5">
+            <h1 className="text-center fw-bold mb-3">
+                🎉 Evenza
+            </h1>
+
+            <p className="text-center text-muted mb-5">
+                Discover and book exciting events around you.
+            </p>
 
             {events.length === 0 ? (
-                <p>No events available.</p>
+                <div className="alert alert-info text-center">
+    No events are available at the moment.
+</div>
             ) : (
-                events.map((event) => (
-                    <div key={event._id}>
-                        <h3>{event.title}</h3>
+                <div className="row">
+                    {events.map((event) => (
+                        <div
+                            key={event._id}
+                            className="col-md-6 col-lg-4 mb-4"
+                        >
+                            <div className="card h-100 shadow border-0">
+                                <div className="card-body">
+                                    <h4 className="card-title fw-bold">
+                                        🎉 {event.title}
+                                    </h4>
 
-                        <p>{event.description}</p>
+                                    <p className="card-text text-muted">
+                                        {event.description}
+                                    </p>
 
-                        <p>
-                            Date: {new Date(event.date).toLocaleDateString()}
-                        </p>
+                                    <p>
+                                        📅 <strong>Date:</strong>{" "}
+                                        {new Date(event.date).toLocaleDateString()}
+                                    </p>
 
-                        <p>Location: {event.location}</p>
+                                    <p>
+                                        📍 <strong>Location:</strong> {event.location}
+                                    </p>
 
-                        <p>Available Seats: {event.availableSeats}</p>
+                                    <p>
+                                        👥 <strong>Available Seats:</strong>{" "}
+                                        {event.availableSeats}
+                                    </p>
+                                </div>
 
-                        <Link to={`/events/${event._id}`}>
-                            View Event
-                        </Link>
-
-                        <hr />
-                    </div>
-                ))
+                                <div className="card-footer bg-white border-0">
+                                    <Link
+                                        to={`/events/${event._id}`}
+                                        className="btn btn-primary rounded-pill w-100"
+                                    >
+                                        View Details
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
 }
+
 export default Home;

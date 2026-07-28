@@ -44,23 +44,76 @@ function EventDetails() {
         return <p>{message || "Loading event..."}</p>;
     }
 
-    return (
-        <div>
-            <Link to="/">← Back to Events</Link>
-            <h1>{event.title}</h1>
-            <p>{event.description}</p>
-            <p>Date: {new Date(event.date).toLocaleDateString()}</p>
-            <p>Location: {event.location}</p>
-            <p>Total Seats: {event.totalSeats}</p>
-            <p>Available Seats: {event.availableSeats}</p>
-            <button
-                onClick={handleBooking}
-                disabled={event.availableSeats === 0}
-            >
-                {event.availableSeats === 0 ? "Sold Out" : "Book Event"}
-            </button>
+   return (
+    <div className="container py-5">
+        <div className="card shadow-lg border-0">
+    <div className="card-body p-5">
+          <Link
+    to="/"
+    className="btn btn-outline-secondary mb-4"
+>
+    ← Back to Events
+</Link>
+            <h1 className="fw-bold mb-4">
+    🎉 {event.title}
+</h1>
+           <p className="lead text-muted">
+    {event.description}
+</p>
+       <div className="row mt-4">
 
-            <p>{message}</p>
+    <div className="col-md-6 mb-3">
+        <div className="border rounded p-3">
+            <strong>📅 Date</strong>
+            <br />
+            {new Date(event.date).toLocaleDateString()}
+        </div>
+    </div>
+
+    <div className="col-md-6 mb-3">
+        <div className="border rounded p-3">
+            <strong>📍 Location</strong>
+            <br />
+            {event.location}
+        </div>
+    </div>
+
+    <div className="col-md-6 mb-3">
+        <div className="border rounded p-3">
+            <strong>👥 Total Seats</strong>
+            <br />
+            {event.totalSeats}
+        </div>
+    </div>
+
+    <div className="col-md-6 mb-3">
+        <div className="border rounded p-3">
+            <strong>✅ Available Seats</strong>
+            <br />
+            {event.availableSeats}
+        </div>
+    </div>
+
+</div>
+          <button
+    className="btn btn-success btn-lg mt-3"
+    onClick={handleBooking}
+>
+    🎟️ Book Event
+</button>
+{message && (
+    <div
+        className={`alert ${
+            message.toLowerCase().includes("success")
+                ? "alert-success"
+                : "alert-warning"
+        } mt-3`}
+    >
+        {message}
+    </div>
+)}     
+                </div>
+          </div>
         </div>
     );
 }

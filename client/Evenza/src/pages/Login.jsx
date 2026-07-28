@@ -5,7 +5,7 @@ import api from "../services/api";
 function Login() {
     const [formData, setFormData] = useState({
         email: "",
-        password: ""
+        password: "",
     });
 
     const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ function Login() {
     const handleChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         });
     };
 
@@ -31,7 +31,7 @@ function Login() {
             );
 
             navigate("/");
-
+            window.location.reload();
         } catch (error) {
             setMessage(
                 error.response?.data?.message || "Login failed"
@@ -40,38 +40,57 @@ function Login() {
     };
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div
+            className="container d-flex justify-content-center align-items-center"
+            style={{ minHeight: "90vh" }}
+        >
+            <div className="card shadow p-4" style={{ width: "400px" }}>
+                <h2 className="text-center mb-4">
+                    Welcome Back 👋
+                </h2>
 
-            <form onSubmit={handleSubmit}>
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                <form onSubmit={handleSubmit}>
+                    <input
+                        className="form-control mb-3"
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                    <input
+                        className="form-control mb-3"
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
 
-                <button type="submit">
-                    Login
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        className="btn btn-primary w-100"
+                    >
+                        Login
+                    </button>
+                </form>
 
-            <p>{message}</p>
+                {message && (
+                    <div className="alert alert-danger mt-3">
+                        {message}
+                    </div>
+                )}
 
-            <p>
-                New to Evenza? <Link to="/register">Register</Link>
-            </p>
+                <p className="text-center mt-3">
+                    New to Evenza?{" "}
+                    <Link to="/register">
+                        Register
+                    </Link>
+                </p>
+            </div>
         </div>
     );
 }

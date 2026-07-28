@@ -38,22 +38,32 @@ function Register() {
         }
     };
 
-    return (
-        <div>
-            <h1>Create Account</h1>
+   return (
+    <div
+        className="container d-flex justify-content-center align-items-center"
+        style={{ minHeight: "90vh" }}
+    >
+        <div className="card shadow p-4" style={{ width: "400px" }}>
+            <h2 className="text-center mb-4">
+                Create an Account 🚀
+            </h2>
 
             <form onSubmit={handleSubmit}>
+
                 <input
+                    className="form-control mb-3"
+                    type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Full Name"
                     value={formData.name}
                     onChange={handleChange}
                     required
                 />
 
                 <input
-                    name="email"
+                    className="form-control mb-3"
                     type="email"
+                    name="email"
                     placeholder="Email"
                     value={formData.email}
                     onChange={handleChange}
@@ -61,26 +71,38 @@ function Register() {
                 />
 
                 <input
-                    name="password"
+                    className="form-control mb-3"
                     type="password"
+                    name="password"
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
                     required
                 />
 
-                <button type="submit">
+                <button
+                    type="submit"
+                    className="btn btn-success w-100"
+                >
                     Register
                 </button>
             </form>
 
-            <p>{message}</p>
+            {message && (
+                <div className="alert alert-info mt-3">
+                    {message}
+                </div>
+            )}
 
-            <p>
-                Already registered? <Link to="/login">Login</Link>
+            <p className="text-center mt-3">
+                Already have an account?{" "}
+                <Link to="/login">
+                    Login
+                </Link>
             </p>
         </div>
-    );
+    </div>
+);
 }
 
 export default Register;
