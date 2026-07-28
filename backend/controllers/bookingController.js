@@ -39,6 +39,21 @@ if (existingBooking) {
         booking: existingBooking
     });
 }
+const booking = await Booking.create({
+    user: req.user._id,
+    event: eventId,
+    status: "Booked",
+    bookingDate: new Date()
+});
+
+event.availableSeats--;
+
+await event.save();
+
+return res.status(201).json({
+    message: "Event booked successfully",
+    booking
+});
     } 
     catch (error) {
         console.error(error);
