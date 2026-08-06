@@ -1,59 +1,148 @@
-# Evenza
+# 🎉 Evenza – Event Booking System
 
-> **Where Great Events Begin.**
-
-Evenza is a modern full-stack event booking platform that allows users to discover events, book tickets, and manage their bookings while enabling administrators to organize and monitor events efficiently.
+Evenza is a full-stack Event Booking System built using the MERN stack. It allows users to browse events, book seats, manage their bookings, and securely authenticate using JWT.
 
 ---
 
-## Features
+## 🚀 Features
 
-- User Authentication
-- Event Management
-- Ticket Booking
-- Booking History
-- User Dashboard
-- Admin Dashboard
-- Event Search & Filtering
-- Responsive Design
+- 🔐 User Registration & Login
+- 🔒 JWT Authentication
+- 🛡️ Protected Routes
+- 📅 Browse Available Events
+- 🎟️ Book Events
+- ❌ Cancel Bookings
+- 📖 View My Bookings
+- 🔍 Search Events
+- 📄 Pagination
+- 📱 Responsive Bootstrap UI
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
-- React + Vite
-- Bootstrap
+- React.js
+- React Router
 - Axios
-- React Router DOM
+- Bootstrap
 
 ### Backend
 - Node.js
 - Express.js
+- JWT Authentication
+- Bcrypt.js
 
 ### Database
 - MongoDB Atlas
+- Mongoose
+
+---
+
+## 📂 Project Structure
+
+```
+Evenza/
+│
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── server.js
+│   └── package.json
+│
+└── client/
+    └── Evenza/
+        ├── src/
+        ├── public/
+        ├── package.json
+        └── vite.config.js
+```
+
+---
+
+## ⚙️ Installation
+
+### Clone the repository
+
+```bash
+git clone https://github.com/hansikareddycheguri-ship-it/evenza.git
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+### Frontend
+
+```bash
+cd client/Evenza
+npm install
+npm run dev
+```
+
+---
+
+## 🔑 Environment Variables
+
+Create a `.env` file inside the `backend` folder.
+
+```
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+```
+
+---
+
+## 🌐 API Endpoints
 
 ### Authentication
-- JWT
-- bcrypt
+
+- POST `/api/auth/register`
+- POST `/api/auth/login`
+
+### Events
+
+- GET `/api/events`
+- GET `/api/events/:id`
+- POST `/api/events`
+- PUT `/api/events/:id`
+- DELETE `/api/events/:id`
+
+### Bookings
+
+- POST `/api/bookings`
+- GET `/api/bookings/my-bookings`
+- DELETE `/api/bookings/:id`
 
 ---
 
-## Project Status
+## 📸 Screenshots
 
-🟡 Planning Completed
+You can add screenshots of:
 
-Development in Progress...
-
----
-
-## Documentation
-
-Project documents are available inside the `docs/` folder.
+- Home Page
+- Login
+- Register
+- Event Details
+- My Bookings
 
 ---
 
-## Author
+## 👩‍💻 Author
 
-Hansika Reddy
+**Hansika Reddy Cheguri**
+
+B.Tech CSE, IIT Hyderabad
+
+---
+
+## 📄 License
+
+This project is created for educational purposes.

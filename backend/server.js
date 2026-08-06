@@ -17,7 +17,7 @@ app.use("/api/events", eventRoutes);
 app.use("/api/bookings", bookingRoutes);
 // Test Route
 app.get("/", (req, res) => {
-    res.send("Evenza Backend RunAning");
+    res.send("Evenza Backend Running");
 });
 app.use(errorHandler);
 const startServer = async () => {
