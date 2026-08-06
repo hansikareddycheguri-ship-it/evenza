@@ -3,7 +3,13 @@
 Evenza is a full-stack Event Booking System built using the MERN stack. It allows users to browse events, book seats, manage their bookings, and securely authenticate using JWT.
 
 ---
+## Live Demo
 
+Frontend:
+https://evenza-three.vercel.app
+
+Backend API:
+https://evenza-production-17ad.up.railway.app
 ## 🚀 Features
 
 - 🔐 User Registration & Login
